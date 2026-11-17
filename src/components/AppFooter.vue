@@ -55,3 +55,93 @@
     </div>
   </footer>
 </template>
+
+<style scoped lang="scss">
+/* Footer */
+.footer {
+  color: var(--color-text-light);
+  background-color: var(--color-primary);
+  padding: var(--space-48) 0 var(--space-24);
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.footer-content h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-8);
+}
+
+.footer-logo {
+  width: 200px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-brand ul {
+  display: flex;
+  gap: var(--space-16);
+  margin-top: var(--space-16);
+}
+
+.footer-brand ul img {
+  height: 32px;
+  width: 32px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-links ul li {
+  margin: var(--space-8) 0;
+}
+
+.footer-contact address {
+  font-style: normal;
+}
+
+.footer-contact ul li {
+  display: flex;
+  align-items: center;
+  margin: var(--space-8) 0;
+}
+
+.footer-contact ul li img {
+  filter: brightness(0) invert(1);
+  margin-right: var(--space-8);
+}
+
+.footer-note {
+  font-size: var(--font-size-sm);
+  text-align: center;
+  margin-top: var(--space-24);
+  padding-top: var(--space-24);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* RWD */
+
+@media (max-width: 799px) {
+  .footer-links {
+    display: none;
+  }
+}
+
+@media (max-width: 499px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-32);
+  }
+
+  .footer-logo {
+    margin: 0 auto;
+  }
+
+  .footer-brand ul,
+  .footer-contact ul li {
+    justify-content: center;
+  }
+}
+</style>
