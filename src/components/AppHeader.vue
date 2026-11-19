@@ -11,7 +11,7 @@ const isMenuOpen = ref(false)
       <RouterLink to="/">
         <img class="header__logo" src="@/assets/images/logo.webp" alt="Serene Stay" />
       </RouterLink>
-      <nav class="header__nav">
+      <nav class="header__nav" aria-label="主選單">
         <ul class="header__nav-list">
           <li v-for="link in navLinks" :key="link.label">
             <RouterLink class="header__link" :to="link.to">{{ link.label }}</RouterLink>
@@ -31,6 +31,7 @@ const isMenuOpen = ref(false)
         class="header__mobile-menu"
         :class="{ 'header__mobile-menu--open': isMenuOpen }"
         @click="isMenuOpen = false"
+        aria-label="行動版選單"
       >
         <ul class="header__mobile-list">
           <li v-for="link in navLinks" :key="link.label">

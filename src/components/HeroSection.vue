@@ -1,25 +1,10 @@
-<script setup>
-import { ref } from 'vue'
-const showAlternate = ref(false)
-function toggleText() {
-  showAlternate.value = !showAlternate.value
-}
-</script>
-
 <template>
   <section class="hero">
     <div class="container hero__inner">
       <div class="hero__content">
-        <span class="hero__eyebrow">{{
-          showAlternate ? 'HAVE A GOOD TIME' : 'A BETTER PLACE TO STAY'
-        }}</span>
-        <h1 class="hero__title" @click="toggleText">
-          <template v-if="showAlternate">讓每一段旅程<br />都成為美好回憶</template>
-          <template v-else>在山海之間<br />找到更好的自己</template>
-        </h1>
-        <p class="hero__subtitle">
-          {{ showAlternate ? '享受當下・讓身心在旅途中自在放鬆' : '放慢腳步・享受舒適的住宿體驗' }}
-        </p>
+        <span class="hero__eyebrow">A BETTER PLACE TO STAY</span>
+        <h1 class="hero__title">在山海之間<br />找到更好的自己</h1>
+        <p class="hero__subtitle">放慢腳步・享受舒適的住宿體驗</p>
         <RouterLink class="hero__cta" to="/#contact">立即預訂 ➜</RouterLink>
       </div>
     </div>
@@ -57,7 +42,6 @@ function toggleText() {
     font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-heading);
-    cursor: pointer;
 
     @include up(sm) {
       font-size: var(--font-size-3xl);
