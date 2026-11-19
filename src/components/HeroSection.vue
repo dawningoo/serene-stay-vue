@@ -29,7 +29,7 @@ function toggleText() {
 <style scoped lang="scss">
 .hero {
   height: 480px;
-  background-image: url('@/assets/images/hero.png');
+  background-image: url('@/assets/images/hero.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

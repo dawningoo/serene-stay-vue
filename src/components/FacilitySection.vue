@@ -66,7 +66,7 @@ import { facilities } from '@/data/facilities'
 
   &__image {
     display: none;
-    background-image: url('@/assets/images/facility.png');
+    background-image: url('@/assets/images/facility.webp');
     background-size: cover;
     background-position: right center;
     background-repeat: no-repeat;

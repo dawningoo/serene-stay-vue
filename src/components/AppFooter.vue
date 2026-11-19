@@ -7,7 +7,7 @@ import { navLinks } from '@/data/navLinks'
     <div class="container">
       <div class="footer__columns">
         <div class="footer__brand">
-          <img class="footer__logo" src="@/assets/images/logo.png" alt="Serene Stay" />
+          <img class="footer__logo" src="@/assets/images/logo.webp" alt="Serene Stay" />
           <p class="footer__slogan">在旅程中，找到屬於自己的寧靜時光。</p>
           <ul class="footer__social">
             <li>

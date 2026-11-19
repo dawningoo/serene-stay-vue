@@ -9,7 +9,7 @@ const isMenuOpen = ref(false)
   <header class="header">
     <div class="container header__inner">
       <RouterLink to="/">
-        <img class="header__logo" src="@/assets/images/logo.png" alt="Serene Stay" />
+        <img class="header__logo" src="@/assets/images/logo.webp" alt="Serene Stay" />
       </RouterLink>
       <nav class="header__nav">
         <ul class="header__nav-list">

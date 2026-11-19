@@ -1,7 +1,7 @@
-import room01 from '@/assets/images/room01.png'
-import room02 from '@/assets/images/room02.png'
-import room03 from '@/assets/images/room03.png'
-import room04 from '@/assets/images/room04.png'
+import room01 from '@/assets/images/room01.webp'
+import room02 from '@/assets/images/room02.webp'
+import room03 from '@/assets/images/room03.webp'
+import room04 from '@/assets/images/room04.webp'
 
 export const rooms = [
   {
