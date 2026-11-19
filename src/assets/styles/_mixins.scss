@@ -1,0 +1,18 @@
+@use 'sass:map';
+
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1200px,
+);
+
+@mixin up($name) {
+  // 斷點不存在時會編譯失敗，避免產生無效的 @media
+  @if not map.has-key($breakpoints, $name) {
+    @error "Unknown breakpoint: #{$name}. Available: #{map.keys($breakpoints)}";
+  }
+
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}

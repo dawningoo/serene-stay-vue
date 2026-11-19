@@ -6,12 +6,12 @@ import { rooms } from '@/data/rooms'
 <template>
   <section id="rooms" class="rooms">
     <div class="container">
-      <div class="rooms-heading">
+      <div class="rooms__heading">
         <span>OUR ROOMS</span>
         <h2>精選房型</h2>
         <p>不同的旅程，同樣的舒適，找到最適合您的房間。</p>
       </div>
-      <ul>
+      <ul class="rooms__list">
         <RoomCard v-for="room in rooms" :key="room.id" :room="room" />
       </ul>
     </div>
@@ -19,30 +19,37 @@ import { rooms } from '@/data/rooms'
 </template>
 
 <style scoped lang="scss">
-/* Rooms */
 .rooms {
   margin-bottom: var(--space-80);
-}
 
-.rooms-heading {
-  text-align: center;
-  margin-bottom: var(--space-24);
-}
+  &__heading {
+    text-align: center;
+    margin-bottom: var(--space-24);
 
-.rooms-heading span,
-.rooms-heading p {
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-secondary);
-}
+    span,
+    p {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+    }
 
-.rooms-heading h2 {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-}
+    h2 {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+    }
+  }
 
-.rooms ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-24);
+  &__list {
+    display: grid;
+    gap: var(--space-24);
+    grid-template-columns: minmax(0, 1fr);
+
+    @include up(sm) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include up(lg) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
 }
 </style>
