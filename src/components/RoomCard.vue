@@ -12,7 +12,10 @@ defineProps({
       <p>{{ room.description }}</p>
       <div class="room-card__booking">
         <span>NT ${{ room.price.toLocaleString() }} 起</span>
-        <RouterLink to="/#contact" :aria-label="`預訂${room.name}`">
+        <RouterLink
+          :to="{ name: 'room-detail', params: { id: room.id } }"
+          :aria-label="`預訂${room.name}`"
+        >
           <img class="room-card__booking-icon" src="@/assets/images/icons/arrow-right.svg" alt="" />
         </RouterLink>
       </div>

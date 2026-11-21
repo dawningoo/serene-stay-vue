@@ -1,6 +1,13 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import RoomCard from './RoomCard.vue'
-import { rooms } from '@/data/rooms'
+import { getRooms } from '@/api/rooms'
+
+const rooms = ref([])
+
+onMounted(async () => {
+  rooms.value = await getRooms()
+})
 </script>
 
 <template>
