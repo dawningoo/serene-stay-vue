@@ -1,24 +1,77 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, onMounted, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { getRoomById } from '@/api/rooms'
+import { addDays, calculateBooking, getToday } from '@/utils/pricing'
 
 const route = useRoute()
+const router = useRouter()
 const room = ref(null)
 const isLoading = ref(true)
 
+const today = getToday()
 const checkIn = ref('')
 const checkOut = ref('')
-const guests = ref(2)
+const guests = ref(1)
 
-// TODO: 暫時寫死，之後換成每間房自己的資料
-const facts = [
-  { label: '可住人數', value: '最多 2 人' },
-  { label: '房間大小', value: '22 m²' },
-  { label: '床型', value: '一張雙人床' },
-]
+const facts = computed(() => {
+  if (!room.value) return []
+  return [
+    { label: '可住人數', value: `最多 ${room.value.maxGuests} 人` },
+    { label: '房間大小', value: `${room.value.size} m²` },
+    { label: '床型', value: room.value.bed },
+  ]
+})
+
+// 退房日最早是入住日的隔天；還沒選入住日時，以明天為下限
+const minCheckOut = computed(() => addDays(checkIn.value || today, 1))
+
+// 人數選項：1 到這間房的可住人數上限
+const guestOptions = computed(() => {
+  const max = room.value?.maxGuests || 1
+  return Array.from({ length: max }, (_, index) => index + 1)
+})
+
+// 住幾晚、總價都由純函式算出來，這裡只負責把表單的值傳進去
+const booking = computed(() =>
+  calculateBooking({
+    checkIn: checkIn.value,
+    checkOut: checkOut.value,
+    basePrice: room.value?.price ?? 0,
+  }),
+)
+
+// 使用者還沒填完時不提示錯誤，只有「已經填了但不合理」才顯示
+const errorMessage = computed(() => {
+  if (checkIn.value && checkIn.value < today) return '入住日期不能早於今天'
+  if (checkIn.value && checkOut.value && booking.value.error === 'INVALID_RANGE') {
+    return '退房日期必須晚於入住日期'
+  }
+  return ''
+})
+const canSubmit = computed(() => booking.value.error === null && !errorMessage.value)
+
+// 入住日改到比退房日還晚時，清掉退房日，避免留著不合理的組合
+watch(checkIn, (value) => {
+  if (checkOut.value && checkOut.value <= value) checkOut.value = ''
+})
+
+function handleSubmit() {
+  if (!canSubmit.value) return
+  router.push({
+    name: 'booking',
+    query: {
+      roomId: room.value.id,
+      checkIn: checkIn.value,
+      checkOut: checkOut.value,
+      guests: guests.value,
+    },
+  })
+}
+
 onMounted(async () => {
   room.value = await getRoomById(route.params.id)
+  if (room.value) guests.value = Math.min(2, room.value.maxGuests || 1)
   isLoading.value = false
 })
 </script>
@@ -63,27 +116,57 @@ onMounted(async () => {
           </p>
           <p class="room-detail__price-note">週五、週六入住加價 20%</p>
 
-          <form class="room-detail__form" @submit.prevent>
+          <form class="room-detail__form" novalidate @submit.prevent="handleSubmit">
             <div class="room-detail__dates">
               <div class="room-detail__field">
                 <label class="room-detail__label" for="check-in">入住日期</label>
-                <input id="check-in" v-model="checkIn" class="room-detail__input" type="date" />
+                <input
+                  id="check-in"
+                  v-model="checkIn"
+                  class="room-detail__input"
+                  type="date"
+                  :min="today"
+                />
               </div>
               <div class="room-detail__field">
                 <label class="room-detail__label" for="check-out">退房日期</label>
-                <input id="check-out" v-model="checkOut" class="room-detail__input" type="date" />
+                <input
+                  id="check-out"
+                  v-model="checkOut"
+                  class="room-detail__input"
+                  type="date"
+                  :min="minCheckOut"
+                />
               </div>
             </div>
 
             <div class="room-detail__field">
               <label class="room-detail__label" for="guests">入住人數</label>
               <select id="guests" v-model="guests" class="room-detail__input">
-                <option :value="1">1 位</option>
-                <option :value="2">2 位</option>
+                <option v-for="count in guestOptions" :key="count" :value="count">
+                  {{ count }} 位
+                </option>
               </select>
             </div>
 
-            <button class="room-detail__submit" type="submit">前往填寫訂房資料</button>
+            <p v-if="errorMessage" class="room-detail__error" role="alert">{{ errorMessage }}</p>
+
+            <div v-else-if="booking.nights" class="room-detail__summary" aria-live="polite">
+              <p class="room-detail__summary-row">
+                <span>住宿 {{ booking.nights }} 晚</span>
+              </p>
+              <p v-if="booking.weekendNights" class="room-detail__summary-note">
+                含 {{ booking.weekendNights }} 晚週五、週六加價 20%
+              </p>
+              <p class="room-detail__total">
+                <span>總價</span>
+                <strong>NT$ {{ booking.total.toLocaleString() }}</strong>
+              </p>
+            </div>
+
+            <button class="room-detail__submit" type="submit" :disabled="!canSubmit">
+              前往填寫訂房資料
+            </button>
           </form>
         </aside>
       </div>
@@ -93,6 +176,8 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .room-detail {
+  margin-bottom: var(--space-80);
+
   &__breadcrumb ol {
     display: flex;
     font-size: var(--font-size-sm);
@@ -250,8 +335,43 @@ onMounted(async () => {
     border-radius: var(--radius-full);
     background-color: var(--color-primary);
     color: var(--color-text-light);
+    font-size: var(--font-size-md);
     font-weight: var(--font-weight-bold);
     cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__error {
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+  }
+
+  &__summary {
+    display: grid;
+    gap: var(--space-8);
+    padding-top: var(--space-16);
+    border-top: 1px solid var(--color-border);
+  }
+
+  &__summary-row,
+  &__total {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__summary-note {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  &__total {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
   }
 
   &__status {

@@ -14,6 +14,16 @@ const router = createRouter({
       name: 'room-detail',
       component: () => import('../views/RoomDetailView.vue'),
     },
+    {
+      path: '/booking',
+      name: 'booking',
+      component: () => import('../views/BookingView.vue'),
+    },
+    {
+      path: '/booking/success',
+      name: 'booking-success',
+      component: () => import('../views/BookingSuccessView.vue'),
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

@@ -15,6 +15,9 @@ function normalize(product) {
     price: product.price,
     name: product.title,
     unit: product.unit,
+    maxGuests: product.maxGuests,
+    size: product.size,
+    bed: product.bed,
   }
 }
 
@@ -28,6 +31,9 @@ const fallbackRooms = mockRooms.map((room) => ({
   price: room.price,
   name: room.name,
   unit: '晚',
+  maxGuests: 2,
+  size: 0,
+  bed: '',
 }))
 
 export async function getRooms() {
