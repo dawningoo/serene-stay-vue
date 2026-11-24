@@ -1,16 +1,17 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getRoomById } from '@/api/rooms'
 import { calculateBooking } from '@/utils/pricing'
 import { clearCart, addToCart, createOrder } from '@/api/orders'
+import { useRoom } from '@/composables/useRoom'
 
 const route = useRoute()
 const router = useRouter()
-const room = ref(null)
-const isLoading = ref(true)
 const isSubmitting = ref(false)
 const submitError = ref('')
+
+const roomId = computed(() => String(route.query.roomId ?? ''))
+const { room, isLoading } = useRoom(roomId)
 
 // 網址上的值一律當成不可信的輸入：價格不從網址帶，而是用房型資料重新計算
 const checkIn = computed(() => String(route.query.checkIn ?? ''))
@@ -75,11 +76,6 @@ async function handleSubmit() {
     isSubmitting.value = false
   }
 }
-
-onMounted(async () => {
-  room.value = await getRoomById(String(route.query.roomId ?? ''))
-  isLoading.value = false
-})
 </script>
 
 <template>

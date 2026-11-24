@@ -1,18 +1,22 @@
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getRoomById } from '@/api/rooms'
 import { addDays, calculateBooking, getToday } from '@/utils/pricing'
+import { useRoom } from '@/composables/useRoom'
 
 const route = useRoute()
 const router = useRouter()
-const room = ref(null)
-const isLoading = ref(true)
-
 const today = getToday()
 const checkIn = ref('')
 const checkOut = ref('')
 const guests = ref(1)
+
+const roomId = computed(() => String(route.params.id ?? ''))
+const { room, isLoading } = useRoom(roomId)
+
+watch(room, (newRoom) => {
+  if (newRoom) guests.value = Math.min(2, newRoom.maxGuests || 1)
+})
 
 const facts = computed(() => {
   if (!room.value) return []
@@ -68,12 +72,6 @@ function handleSubmit() {
     },
   })
 }
-
-onMounted(async () => {
-  room.value = await getRoomById(route.params.id)
-  if (room.value) guests.value = Math.min(2, room.value.maxGuests || 1)
-  isLoading.value = false
-})
 </script>
 
 <template>
