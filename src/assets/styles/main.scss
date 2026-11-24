@@ -2,7 +2,7 @@
 @use './reset';
 
 body {
-  font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  font-family: var(--font-family-base);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-default);
@@ -14,4 +14,11 @@ body {
   max-width: var(--container-max);
   padding: 0 var(--container-gutter);
   margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
 }
