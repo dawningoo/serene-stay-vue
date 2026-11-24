@@ -24,6 +24,11 @@ const router = createRouter({
       name: 'booking-success',
       component: () => import('../views/BookingSuccessView.vue'),
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('../views/NotFoundView.vue'),
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
