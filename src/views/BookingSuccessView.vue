@@ -10,7 +10,7 @@ const orderId = computed(() => String(route.query.orderId ?? ''))
   <div class="container success">
     <div v-if="orderId" class="success__card">
       <span class="success__icon" aria-hidden="true">✓</span>
-      <h1 class="success__title">訂房成功</h1>
+      <h1 class="success__title">預訂完成</h1>
       <p class="success__order">訂單編號：{{ orderId }}</p>
       <RouterLink class="success__button" to="/">回到首頁</RouterLink>
     </div>

@@ -5,7 +5,7 @@
         <span class="hero__eyebrow">A BETTER PLACE TO STAY</span>
         <h1 class="hero__title">在山海之間<br />找到更好的自己</h1>
         <p class="hero__subtitle">放慢腳步・享受舒適的住宿體驗</p>
-        <RouterLink class="hero__cta" to="/#contact">立即預訂 ➜</RouterLink>
+        <RouterLink class="hero__cta" to="/#rooms">立即預訂 ➜</RouterLink>
       </div>
     </div>
   </section>

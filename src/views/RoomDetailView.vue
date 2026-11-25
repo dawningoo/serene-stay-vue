@@ -163,7 +163,7 @@ function handleSubmit() {
             </div>
 
             <button class="room-detail__submit" type="submit" :disabled="!canSubmit">
-              前往填寫訂房資料
+              立即預訂
             </button>
           </form>
         </aside>
