@@ -6,40 +6,24 @@ import { navLinks } from '@/data/navLinks'
   <footer class="footer">
     <div class="container">
       <div class="footer__columns">
-        <div class="footer__brand">
+        <div class="footer__brand" id="contact">
           <img class="footer__logo" src="@/assets/images/logo.webp" alt="Serene Stay" />
-          <p class="footer__slogan">在旅程中，找到屬於自己的寧靜時光。</p>
-          <ul class="footer__social">
-            <li>
-              <a href="#"
-                ><img
-                  class="footer__social-icon"
-                  src="@/assets/images/icons/facebook.svg"
-                  alt="Facebook"
-              /></a>
-            </li>
-            <li>
-              <a href="#"
-                ><img
-                  class="footer__social-icon"
-                  src="@/assets/images/icons/instagram.svg"
-                  alt="Instagram"
-              /></a>
-            </li>
-            <li>
-              <a href="#"
-                ><img
-                  class="footer__social-icon"
-                  src="@/assets/images/icons/youtube.svg"
-                  alt="YouTube"
-              /></a>
-            </li>
-            <li>
-              <a href="#"
-                ><img class="footer__social-icon" src="@/assets/images/icons/line.svg" alt="LINE"
-              /></a>
-            </li>
-          </ul>
+          <address class="footer__address">
+            <ul class="footer__contact-list">
+              <li>
+                <img class="footer__contact-icon" src="@/assets/images/icons/map.svg" alt="" />
+                <p>台中市南屯區文心路一段888號</p>
+              </li>
+              <li>
+                <img class="footer__contact-icon" src="@/assets/images/icons/phone.svg" alt="" />
+                <a href="tel:+886-4-58880888">+886-4-58880888</a>
+              </li>
+              <li>
+                <img class="footer__contact-icon" src="@/assets/images/icons/mail.svg" alt="" />
+                <a href="mailto:hello@example.com">hello@example.com</a>
+              </li>
+            </ul>
+          </address>
         </div>
         <div class="footer__links">
           <h3 class="footer__heading">快速連結</h3>
@@ -49,29 +33,52 @@ import { navLinks } from '@/data/navLinks'
             </li>
           </ul>
         </div>
-        <div class="footer__contact" id="contact">
-          <h3 class="footer__heading">聯絡我們</h3>
-          <address>
-            <ul class="footer__contact-list">
-              <li>
-                <img class="footer__contact-icon" src="@/assets/images/icons/map.svg" alt="" />
-                <p>新竹市東區力行六路8號</p>
-              </li>
-              <li>
-                <img class="footer__contact-icon" src="@/assets/images/icons/phone.svg" alt="" />
-                <a href="tel:035636688">03-5636688</a>
-              </li>
-              <li>
-                <img class="footer__contact-icon" src="@/assets/images/icons/mail.svg" alt="" />
-                <a href="mailto:hello@serenestay.com">hello@serenestay.com</a>
-              </li>
-            </ul>
-          </address>
+        <div class="footer__follow">
+          <h3 class="footer__heading">追蹤我們</h3>
+          <ul class="footer__social">
+            <li>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+                ><img
+                  class="footer__social-icon"
+                  src="@/assets/images/icons/facebook.svg"
+                  alt="Facebook"
+              /></a>
+            </li>
+            <li>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                ><img
+                  class="footer__social-icon"
+                  src="@/assets/images/icons/instagram.svg"
+                  alt="Instagram"
+              /></a>
+            </li>
+            <li>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+                ><img
+                  class="footer__social-icon"
+                  src="@/assets/images/icons/youtube.svg"
+                  alt="YouTube"
+              /></a>
+            </li>
+            <li>
+              <a href="https://line.me" target="_blank" rel="noopener noreferrer"
+                ><img class="footer__social-icon" src="@/assets/images/icons/line.svg" alt="LINE"
+              /></a>
+            </li>
+          </ul>
         </div>
       </div>
-      <p class="footer__note">
-        本網站為個人練習作品，內容僅作為學習紀錄與成果展示，無任何商業用途。
-      </p>
+      <div class="footer__note">
+        <p>
+          © 2026 Serene Stay・個人練習作品，無商業用途。
+          <a
+            href="https://github.com/dawningoo/serene-stay-vue"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
+        </p>
+      </div>
     </div>
   </footer>
 </template>
@@ -107,21 +114,24 @@ import { navLinks } from '@/data/navLinks'
     }
   }
 
-  &__social {
+  &__address {
+    font-style: normal;
+  }
+
+  &__contact-list li {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: var(--space-16);
-    margin-top: var(--space-16);
+    margin: var(--space-8) 0;
 
     @include up(sm) {
       justify-content: flex-start;
     }
   }
 
-  &__social-icon {
-    height: 32px;
-    width: 32px;
+  &__contact-icon {
     filter: brightness(0) invert(1);
+    margin-right: var(--space-8);
   }
 
   &__heading {
@@ -142,24 +152,21 @@ import { navLinks } from '@/data/navLinks'
     margin: var(--space-8) 0;
   }
 
-  &__contact address {
-    font-style: normal;
-  }
-
-  &__contact-list li {
+  &__social {
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin: var(--space-8) 0;
+    gap: var(--space-16);
+    margin-top: var(--space-16);
 
     @include up(sm) {
       justify-content: flex-start;
     }
   }
 
-  &__contact-icon {
+  &__social-icon {
+    height: 32px;
+    width: 32px;
     filter: brightness(0) invert(1);
-    margin-right: var(--space-8);
   }
 
   &__note {
@@ -168,6 +175,11 @@ import { navLinks } from '@/data/navLinks'
     margin-top: var(--space-24);
     padding-top: var(--space-24);
     border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+    a:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.3em;
+    }
   }
 }
 </style>
