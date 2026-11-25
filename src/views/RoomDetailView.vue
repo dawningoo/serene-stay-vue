@@ -87,7 +87,7 @@ function handleSubmit() {
       <nav class="room-detail__breadcrumb" aria-label="麵包屑">
         <ol>
           <li><RouterLink to="/">首頁</RouterLink></li>
-          <li><RouterLink to="/#rooms">房型介紹</RouterLink></li>
+          <li><RouterLink to="/#rooms">房型</RouterLink></li>
           <li aria-current="page">{{ room.name }}</li>
         </ol>
       </nav>

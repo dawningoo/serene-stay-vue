@@ -1,6 +1,6 @@
 export const navLinks = [
-  { label: 'Home', to: '/' },
-  { label: 'Rooms', to: '/#rooms' },
-  { label: 'Facilities', to: '/#facilities' },
-  { label: 'Contact', to: '/#contact' },
+  { label: '首頁', to: '/' },
+  { label: '房型', to: '/#rooms' },
+  { label: '設施', to: '/#facilities' },
+  { label: '聯絡我們', to: '/#contact' },
 ]
